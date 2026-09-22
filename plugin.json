@@ -10,15 +10,28 @@
     "name": "gpt_image_2_5",
     "parameters": {
       "type": "object",
-      "required": ["prompt"],
+      "required": [
+        "prompt"
+      ],
       "properties": {
         "prompt": {
           "type": "string",
           "description": "The description of the image to generate or to edit."
+        },
+        "images": {
+          "type": "array",
+          "items": {
+            "type": "typingmind-attachment"
+          },
+          "description": "Pass image attachment ids from <CHAT_ATTACHMENTS> to edit or use as references. Pass an empty array [] to generate a new image without using previous images. Omit this parameter to edit the images from this plugin's last output, including older images not listed in <CHAT_ATTACHMENTS>. If there is no previous image, omitting this parameter generates a new image."
+        },
+        "filename": {
+          "type": "string",
+          "description": "A short, descriptive file name for the created image, without extension (e.g. \"cat-with-hat\"). Use lowercase words separated by hyphens."
         }
       }
     },
-    "description": "Generate a new image or edit an existing image as requested by the user."
+    "description": "Generate a new image, or edit existing image attachments from the chat, as requested by the user."
   },
   "outputType": "cards",
   "userSettings": [
@@ -56,5 +69,5 @@
   "authenticationType": "AUTH_TYPE_NONE",
   "implementationType": "javascript",
   "dynamicContextEndpoints": [],
-  "permissions": ["read_user_message"]
+  "permissions": ["read_chat_attachments"]
 }
