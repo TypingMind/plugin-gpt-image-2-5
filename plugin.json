@@ -79,6 +79,13 @@
       "label": "Quality",
       "values": ["auto", "low", "medium", "high", "xhigh", "max"],
       "description": "Optional, default: \"auto\""
+    },
+    {
+      "name": "svg_model",
+      "type": "text",
+      "label": "SVG Model",
+      "description": "Optional model ID used to author SVG output, separate from the image model. Leave blank when SVG model selection is disabled for your account.",
+      "placeholder": "SVG-authoring model ID"
     }
   ],
   "authenticationType": "AUTH_TYPE_NONE",
