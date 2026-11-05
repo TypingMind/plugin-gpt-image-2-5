@@ -2,21 +2,24 @@
   "id": "gpt_image_2_5",
   "uuid": "94179f5a-dfed-40b5-b218-5e0fd1a112f0",
   "emoji": "🖼️",
-  "title": "GPT Image 2.5",
-  "iconURL": "https://custom.typingmind.com/assets/plugins/gpt-image-2-5.webp",
+  "title": "GPT Image 2.6",
+  "iconURL": "https://custom.typingmind.com/assets/plugins/plugin-image-2-6.webp",
   "createdAt": "2025-04-24T00:03:25.285Z",
   "githubURL": "https://github.com/TypingMind/plugin-gpt-image-2-5",
   "openaiSpec": {
     "name": "gpt_image_2_5",
     "parameters": {
       "type": "object",
-      "required": [
-        "prompt"
-      ],
+      "required": ["prompt"],
       "properties": {
         "prompt": {
           "type": "string",
           "description": "The description of the image to generate or to edit."
+        },
+        "output_format": {
+          "type": "string",
+          "enum": ["png", "jpeg", "webp", "gif", "svg"],
+          "description": "Choose the output format based on the user's request: gif for animated images, svg for vector graphics, or png, jpeg, or webp for raster images. Defaults to png when omitted. GIF and SVG require GPT Image 2.6."
         },
         "images": {
           "type": "array",
@@ -47,15 +50,27 @@
       "name": "model",
       "type": "enum",
       "label": "Model",
-      "values": ["gpt-image-2.5-flare", "gpt-image-2.5-sunburst"],
-      "defaultValue": "gpt-image-2.5-flare",
-      "description": "Optional, default: \"gpt-image-2.5-flare\""
+      "values": [
+        "gpt-image-2.6-flare",
+        "gpt-image-2.6-sunburst",
+        "gpt-image-2.5-flare",
+        "gpt-image-2.5-sunburst"
+      ],
+      "defaultValue": "gpt-image-2.6-flare",
+      "description": "Optional, default: \"gpt-image-2.6-flare\""
     },
     {
       "name": "resolution",
       "type": "enum",
       "label": "Resolution",
-      "values": ["auto", "1024x1024", "1024x1536", "1536x1024", "2160x3840", "3840x2160"],
+      "values": [
+        "auto",
+        "1024x1024",
+        "1024x1536",
+        "1536x1024",
+        "2160x3840",
+        "3840x2160"
+      ],
       "description": "Optional, default: \"auto\""
     },
     {
