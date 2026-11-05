@@ -5,7 +5,7 @@ async function gpt_image_2_5(params, userSettings, authorizedResources) {
   const resolution = userSettings.resolution || 'auto';
   const background = userSettings.background || 'auto';
   const model = userSettings.model || 'gpt-image-2.6-flare';
-  const outputFormat = userSettings.output_format || 'png';
+  const outputFormat = params.output_format || 'png';
 
   if (!openaikey) {
     throw new Error(

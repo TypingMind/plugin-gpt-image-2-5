@@ -16,6 +16,11 @@
           "type": "string",
           "description": "The description of the image to generate or to edit."
         },
+        "output_format": {
+          "type": "string",
+          "enum": ["png", "jpeg", "webp", "gif", "svg"],
+          "description": "Choose the output format based on the user's request: gif for animated images, svg for vector graphics, or png, jpeg, or webp for raster images. Defaults to png when omitted. GIF and SVG require GPT Image 2.6."
+        },
         "images": {
           "type": "array",
           "items": {
@@ -67,14 +72,6 @@
         "3840x2160"
       ],
       "description": "Optional, default: \"auto\""
-    },
-    {
-      "name": "output_format",
-      "type": "enum",
-      "label": "Output Format",
-      "values": ["png", "jpeg", "webp", "gif", "svg"],
-      "defaultValue": "png",
-      "description": "Optional, default: \"png\". GIF and SVG require GPT Image 2.6 and are available for new images only."
     },
     {
       "name": "quality",
