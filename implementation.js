@@ -5,6 +5,7 @@ async function gpt_image_2_5(params, userSettings, authorizedResources) {
   const resolution = userSettings.resolution || 'auto';
   const background = userSettings.background || 'auto';
   const model = userSettings.model || 'gpt-image-2.6-flare';
+  const svgModel = (userSettings.svg_model || '').trim();
   const outputFormat = params.output_format || 'png';
 
   if (!openaikey) {
@@ -67,6 +68,9 @@ async function gpt_image_2_5(params, userSettings, authorizedResources) {
           size: resolution,
           quality,
           output_format: outputFormat,
+          ...(outputFormat === 'svg' && svgModel
+            ? { svg: { model: svgModel } }
+            : {}),
           background,
         }),
       },
@@ -89,6 +93,9 @@ async function gpt_image_2_5(params, userSettings, authorizedResources) {
     formData.append('size', resolution);
     formData.append('quality', quality);
     formData.append('output_format', outputFormat);
+    if (outputFormat === 'svg' && svgModel) {
+      formData.append('svg[model]', svgModel);
+    }
     formData.append('background', background);
 
     for (const image of attachedImages) {
