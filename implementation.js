@@ -4,12 +4,17 @@ async function gpt_image_2_5(params, userSettings, authorizedResources) {
   const quality = userSettings.quality || "auto";
   const resolution = userSettings.resolution || "auto";
   const background = userSettings.background || "auto";
-  const model = userSettings.model || "gpt-image-2.5-flare";
+  const model = userSettings.model || "gpt-image-2.6-flare";
+  const outputFormat = userSettings.output_format || "png";
 
   if (!openaikey) {
     throw new Error(
       "No OpenAI key provided to the GPT Image plugin. Please enter your OpenAI key in the plugin settings and try again.",
     );
+  }
+
+  if (!["png", "jpeg", "webp", "gif", "svg"].includes(outputFormat)) {
+    throw new Error("Output format must be png, jpeg, webp, gif, or svg.");
   }
 
   let attachedImages;
@@ -37,6 +42,18 @@ async function gpt_image_2_5(params, userSettings, authorizedResources) {
   }
 
   const mode = attachedImages.length ? "edit" : "create";
+  if (outputFormat === "gif" || outputFormat === "svg") {
+    if (!model.startsWith("gpt-image-2.6-")) {
+      throw new Error(
+        `${outputFormat.toUpperCase()} output requires a GPT Image 2.6 model. Please update the model in the plugin settings.`,
+      );
+    }
+    if (mode === "edit") {
+      throw new Error(
+        `${outputFormat.toUpperCase()} output is only supported for new images. Generate a new image without references, or choose PNG, JPEG, or WebP for edits.`,
+      );
+    }
+  }
   let resultBase64;
 
   if (mode === "create") {
@@ -54,7 +71,7 @@ async function gpt_image_2_5(params, userSettings, authorizedResources) {
           n: 1,
           size: resolution,
           quality,
-          output_format: "png",
+          output_format: outputFormat,
           background,
         }),
       },
@@ -76,7 +93,7 @@ async function gpt_image_2_5(params, userSettings, authorizedResources) {
     formData.append("n", 1);
     formData.append("size", resolution);
     formData.append("quality", quality);
-    formData.append("output_format", "png");
+    formData.append("output_format", outputFormat);
     formData.append("background", background);
 
     for (const image of attachedImages) {
@@ -106,7 +123,9 @@ async function gpt_image_2_5(params, userSettings, authorizedResources) {
       {
         type: "image",
         image: {
-          url: "data:image/png;base64," + resultBase64,
+          url:
+            `data:image/${outputFormat === "svg" ? "svg+xml" : outputFormat};base64,` +
+            resultBase64,
           alt: prompt.replace(/[[]]/, ""),
           filename:
             typeof params.filename === "string" && params.filename.trim()

@@ -69,6 +69,14 @@
       "description": "Optional, default: \"auto\""
     },
     {
+      "name": "output_format",
+      "type": "enum",
+      "label": "Output Format",
+      "values": ["png", "jpeg", "webp", "gif", "svg"],
+      "defaultValue": "png",
+      "description": "Optional, default: \"png\". GIF and SVG require GPT Image 2.6 and are available for new images only."
+    },
+    {
       "name": "quality",
       "type": "enum",
       "label": "Quality",
